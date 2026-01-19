@@ -86,7 +86,7 @@
                     <div class="mt-6">
                         <span class="inline-block px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
                             <i class="fas fa-utensils mr-2"></i>
-                            {{ $category->activeItems->count() }} productos disponibles
+                            {{ count($category->activeItems)}} productos disponibles
                         </span>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
 
                                 <!-- Precio -->
                                 <div class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                                    <span class="font-bold text-xl text-gray-900">{{ $item->formattedPrice() }}</span>
+                                    <span class="font-bold text-xl text-gray-900">{{ App\Helpers\MenuDataHelper::formattedPrice($item) }}</span>
                                 </div>
                             </div>
 

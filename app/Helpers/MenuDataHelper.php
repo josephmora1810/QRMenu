@@ -523,8 +523,8 @@ class MenuDataHelper
         ];
     }
 
-    public static function formatPrice($price)
+    public static function formattedPrice($item)
     {
-        return '$' . number_format($price, 2);
+        return '$' . number_format($item->price, 2);
     }
 }
