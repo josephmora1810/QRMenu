@@ -8,6 +8,4 @@ environments:
         build:
             - 'composer install --no-dev --optimize-autoloader'
             - 'php artisan event:cache'
-            - 'npm ci && npm run build && rm -rf node_modules'
-            # Elimina las migraciones, ya no las necesitamos
-            # - 'php artisan migrate:fresh --seed --force'
+            - 'npm ci && npm run build && rmdir /s /q node_modules'
