@@ -14,6 +14,8 @@
         "bref/laravel-bridge": "^2.7",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "laravel/vapor-cli": "^1.66",
+        "laravel/vapor-core": "^2.43",
         "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
@@ -31,7 +33,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/MenuDataHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

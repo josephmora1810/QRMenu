@@ -1,23 +1,66 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Helpers;
 
-use App\Models\MenuItem;
-use App\Models\MenuCategory;
-use Illuminate\Database\Seeder;
-
-class MenuItemsSeeder extends Seeder
+class MenuDataHelper
 {
-    public function run(): void
+    public static function getCategories()
     {
-        // Obtener categorías
-        $parrillas = MenuCategory::where('slug', 'combos-parrillas')->first();
-        $hamburguesas = MenuCategory::where('slug', 'hamburguesas-perros')->first();
-        $pizzas = MenuCategory::where('slug', 'pizzas')->first();
+        return [
+            (object)[
+                'id' => 1,
+                'name' => 'Combos de Parrillas',
+                'slug' => 'combos-parrillas',
+                'description' => 'Deliciosas combinaciones de carnes a la parrilla con guarniciones',
+                'order' => 1,
+                'is_active' => true,
+            ],
+            (object)[
+                'id' => 2,
+                'name' => 'Hamburguesas y Perros Calientes',
+                'slug' => 'hamburguesas-perros',
+                'description' => 'Hamburguesas artesanales y perros calientes con ingredientes premium',
+                'order' => 2,
+                'is_active' => true,
+            ],
+            (object)[
+                'id' => 3,
+                'name' => 'Pizzas',
+                'slug' => 'pizzas',
+                'description' => 'Pizzas artesanales con masa fresca y ingredientes de calidad',
+                'order' => 3,
+                'is_active' => true,
+            ],
+        ];
+    }
 
-        // Combos de Parrillas (10 items)
-        $parrillasItems = [
-            [
+    public static function getAllItems()
+    {
+        return [
+            'combos-parrillas' => self::getParrillasItems(),
+            'hamburguesas-perros' => self::getHamburguesasItems(),
+            'pizzas' => self::getPizzasItems(),
+        ];
+    }
+
+    public static function getCompleteMenu()
+    {
+        $categories = self::getCategories();
+        $allItems = self::getAllItems();
+
+        foreach ($categories as $category) {
+            $category->activeItems = $allItems[$category->slug] ?? [];
+        }
+
+        return $categories;
+    }
+
+    private static function getParrillasItems()
+    {
+        return [
+            (object)[
+                'id' => 1,
+                'category_id' => 1,
                 'name' => 'Combo Parrillero Familiar',
                 'slug' => 'combo-parrillero-familiar',
                 'description' => 'Completo combo familiar para compartir',
@@ -26,8 +69,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop',
                 'calories' => 1800,
                 'preparation_time' => 35,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 1,
             ],
-            [
+            (object)[
+                'id' => 2,
+                'category_id' => 1,
                 'name' => 'Combo Carnes Mixtas',
                 'slug' => 'combo-carnes-mixtas',
                 'description' => 'Selección de las mejores carnes',
@@ -36,8 +84,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
                 'calories' => 1250,
                 'preparation_time' => 30,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 2,
             ],
-            [
+            (object)[
+                'id' => 3,
+                'category_id' => 1,
                 'name' => 'Combo BBQ Especial',
                 'slug' => 'combo-bbq-especial',
                 'description' => 'Sabor ahumado con nuestra salsa secreta BBQ',
@@ -46,8 +99,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=400&h=300&fit=crop',
                 'calories' => 1400,
                 'preparation_time' => 40,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 3,
             ],
-            [
+            (object)[
+                'id' => 4,
+                'category_id' => 1,
                 'name' => 'Combo Parrilla Argentina',
                 'slug' => 'combo-parrilla-argentina',
                 'description' => 'Auténtico sabor argentino',
@@ -56,8 +114,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop',
                 'calories' => 1600,
                 'preparation_time' => 45,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 4,
             ],
-            [
+            (object)[
+                'id' => 5,
+                'category_id' => 1,
                 'name' => 'Combo Parrilla Light',
                 'slug' => 'combo-parrilla-light',
                 'description' => 'Opción más saludable sin sacrificar sabor',
@@ -66,8 +129,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop',
                 'calories' => 850,
                 'preparation_time' => 25,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 5,
             ],
-            [
+            (object)[
+                'id' => 6,
+                'category_id' => 1,
                 'name' => 'Combo Mar y Tierra',
                 'slug' => 'combo-mar-y-tierra',
                 'description' => 'La combinación perfecta de carnes y mariscos',
@@ -76,8 +144,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
                 'calories' => 1350,
                 'preparation_time' => 35,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 6,
             ],
-            [
+            (object)[
+                'id' => 7,
+                'category_id' => 1,
                 'name' => 'Combo Parrilla Express',
                 'slug' => 'combo-parrilla-express',
                 'description' => 'Perfecto para cuando tienes prisa',
@@ -86,8 +159,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
                 'calories' => 1100,
                 'preparation_time' => 20,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 7,
             ],
-            [
+            (object)[
+                'id' => 8,
+                'category_id' => 1,
                 'name' => 'Combo Parrilla Premium',
                 'slug' => 'combo-parrilla-premium',
                 'description' => 'Nuestra selección más exclusiva',
@@ -96,8 +174,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop',
                 'calories' => 1650,
                 'preparation_time' => 50,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 8,
             ],
-            [
+            (object)[
+                'id' => 9,
+                'category_id' => 1,
                 'name' => 'Combo Parrilla Vegana',
                 'slug' => 'combo-parrilla-vegana',
                 'description' => 'Deliciosas opciones vegetarianas a la parrilla',
@@ -106,8 +189,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop',
                 'calories' => 750,
                 'preparation_time' => 25,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 9,
             ],
-            [
+            (object)[
+                'id' => 10,
+                'category_id' => 1,
                 'name' => 'Combo Parrilla Mexicana',
                 'slug' => 'combo-parrilla-mexicana',
                 'description' => 'Con el toque picante mexicano',
@@ -116,12 +204,19 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop',
                 'calories' => 1450,
                 'preparation_time' => 30,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 10,
             ],
         ];
+    }
 
-        // Hamburguesas y Perros Calientes (10 items)
-        $hamburguesasItems = [
-            [
+    private static function getHamburguesasItems()
+    {
+        return [
+            (object)[
+                'id' => 11,
+                'category_id' => 2,
                 'name' => 'Hamburguesa Clásica',
                 'slug' => 'hamburguesa-clasica',
                 'description' => 'La hamburguesa que nunca falla',
@@ -130,8 +225,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
                 'calories' => 850,
                 'preparation_time' => 15,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 1,
             ],
-            [
+            (object)[
+                'id' => 12,
+                'category_id' => 2,
                 'name' => 'Hamburguesa BBQ',
                 'slug' => 'hamburguesa-bbq',
                 'description' => 'Con nuestra salsa BBQ casera',
@@ -140,8 +240,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1553979459-d2229ba7433d?w=400&h=300&fit=crop',
                 'calories' => 1200,
                 'preparation_time' => 20,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 2,
             ],
-            [
+            (object)[
+                'id' => 13,
+                'category_id' => 2,
                 'name' => 'Hamburguesa Vegana',
                 'slug' => 'hamburguesa-vegana',
                 'description' => 'Deliciosa opción vegetariana',
@@ -150,8 +255,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1559314809-2b99056a8c4a?w=400&h=300&fit=crop',
                 'calories' => 650,
                 'preparation_time' => 18,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 3,
             ],
-            [
+            (object)[
+                'id' => 14,
+                'category_id' => 2,
                 'name' => 'Hamburguesa Hawaiana',
                 'slug' => 'hamburguesa-hawaiana',
                 'description' => 'Dulce y salada al estilo hawaiano',
@@ -160,8 +270,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop',
                 'calories' => 950,
                 'preparation_time' => 22,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 4,
             ],
-            [
+            (object)[
+                'id' => 15,
+                'category_id' => 2,
                 'name' => 'Perro Caliente Clásico',
                 'slug' => 'perro-caliente-clasico',
                 'description' => 'El tradicional que todos aman',
@@ -170,8 +285,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
                 'calories' => 700,
                 'preparation_time' => 10,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 5,
             ],
-            [
+            (object)[
+                'id' => 16,
+                'category_id' => 2,
                 'name' => 'Perro Caliente Mexicano',
                 'slug' => 'perro-caliente-mexicano',
                 'description' => 'Con el toque picante mexicano',
@@ -180,8 +300,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1547584370-2e0343a7c3c9?w=400&h=300&fit=crop',
                 'calories' => 850,
                 'preparation_time' => 12,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 6,
             ],
-            [
+            (object)[
+                'id' => 17,
+                'category_id' => 2,
                 'name' => 'Perro Caliente Chicago',
                 'slug' => 'perro-caliente-chicago',
                 'description' => 'Estilo Chicago auténtico',
@@ -190,8 +315,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop',
                 'calories' => 800,
                 'preparation_time' => 15,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 7,
             ],
-            [
+            (object)[
+                'id' => 18,
+                'category_id' => 2,
                 'name' => 'Hamburguesa Doble Queso',
                 'slug' => 'hamburguesa-doble-queso',
                 'description' => 'Para los amantes del queso',
@@ -200,8 +330,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1603064752734-4c48eff53d05?w=400&h=300&fit=crop',
                 'calories' => 1350,
                 'preparation_time' => 25,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 8,
             ],
-            [
+            (object)[
+                'id' => 19,
+                'category_id' => 2,
                 'name' => 'Perro Caliente Hawái',
                 'slug' => 'perro-caliente-hawai',
                 'description' => 'Con sabores tropicales',
@@ -210,8 +345,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&h=300&fit=crop',
                 'calories' => 750,
                 'preparation_time' => 12,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 9,
             ],
-            [
+            (object)[
+                'id' => 20,
+                'category_id' => 2,
                 'name' => 'Hamburguesa Picante',
                 'slug' => 'hamburguesa-picante',
                 'description' => 'Para valientes amantes del picante',
@@ -220,12 +360,19 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400&h=300&fit=crop',
                 'calories' => 1100,
                 'preparation_time' => 20,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 10,
             ],
         ];
+    }
 
-        // Pizzas (10 items)
-        $pizzasItems = [
-            [
+    private static function getPizzasItems()
+    {
+        return [
+            (object)[
+                'id' => 21,
+                'category_id' => 3,
                 'name' => 'Pizza Margherita',
                 'slug' => 'pizza-margherita',
                 'description' => 'La clásica italiana',
@@ -234,8 +381,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop',
                 'calories' => 850,
                 'preparation_time' => 25,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 1,
             ],
-            [
+            (object)[
+                'id' => 22,
+                'category_id' => 3,
                 'name' => 'Pizza Pepperoni',
                 'slug' => 'pizza-pepperoni',
                 'description' => 'La favorita de todos',
@@ -244,8 +396,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
                 'calories' => 950,
                 'preparation_time' => 22,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 2,
             ],
-            [
+            (object)[
+                'id' => 23,
+                'category_id' => 3,
                 'name' => 'Pizza Hawaiana',
                 'slug' => 'pizza-hawaiana',
                 'description' => 'Dulce y salada',
@@ -254,8 +411,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop',
                 'calories' => 900,
                 'preparation_time' => 24,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 3,
             ],
-            [
+            (object)[
+                'id' => 24,
+                'category_id' => 3,
                 'name' => 'Pizza Cuatro Quesos',
                 'slug' => 'pizza-cuatro-quesos',
                 'description' => 'Para amantes del queso',
@@ -264,8 +426,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1593246049226-ded77bf90326?w=400&h=300&fit=crop',
                 'calories' => 1100,
                 'preparation_time' => 28,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 4,
             ],
-            [
+            (object)[
+                'id' => 25,
+                'category_id' => 3,
                 'name' => 'Pizza Vegetariana',
                 'slug' => 'pizza-vegetariana',
                 'description' => 'Llena de vegetales frescos',
@@ -274,8 +441,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
                 'calories' => 800,
                 'preparation_time' => 26,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 5,
             ],
-            [
+            (object)[
+                'id' => 26,
+                'category_id' => 3,
                 'name' => 'Pizza Carnívora',
                 'slug' => 'pizza-carnivora',
                 'description' => 'Carnes por todas partes',
@@ -284,8 +456,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=400&h=300&fit=crop',
                 'calories' => 1300,
                 'preparation_time' => 30,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 6,
             ],
-            [
+            (object)[
+                'id' => 27,
+                'category_id' => 3,
                 'name' => 'Pizza BBQ Chicken',
                 'slug' => 'pizza-bbq-chicken',
                 'description' => 'Pollo con salsa BBQ',
@@ -294,8 +471,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
                 'calories' => 1050,
                 'preparation_time' => 27,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 7,
             ],
-            [
+            (object)[
+                'id' => 28,
+                'category_id' => 3,
                 'name' => 'Pizza Mexicana',
                 'slug' => 'pizza-mexicana',
                 'description' => 'Con sabores mexicanos',
@@ -304,8 +486,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1595708684082-a173bb3a06c5?w=400&h=300&fit=crop',
                 'calories' => 1150,
                 'preparation_time' => 29,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 8,
             ],
-            [
+            (object)[
+                'id' => 29,
+                'category_id' => 3,
                 'name' => 'Pizza Supreme',
                 'slug' => 'pizza-supreme',
                 'description' => 'La pizza completa',
@@ -314,8 +501,13 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1542282811-943ef1a977c3?w=400&h=300&fit=crop',
                 'calories' => 1250,
                 'preparation_time' => 32,
+                'is_featured' => true,
+                'is_available' => true,
+                'order' => 9,
             ],
-            [
+            (object)[
+                'id' => 30,
+                'category_id' => 3,
                 'name' => 'Pizza Trufa',
                 'slug' => 'pizza-trufa',
                 'description' => 'Delicada con aceite de trufa',
@@ -324,35 +516,15 @@ class MenuItemsSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=400&h=300&fit=crop',
                 'calories' => 950,
                 'preparation_time' => 35,
+                'is_featured' => false,
+                'is_available' => true,
+                'order' => 10,
             ],
         ];
+    }
 
-        // Insertar los items
-        $order = 1;
-        foreach ($parrillasItems as $item) {
-            $item['category_id'] = $parrillas->id;
-            $item['order'] = $order++;
-            MenuItem::updateOrCreate(['slug' => $item['slug']], $item);
-            $this->command->info('Created menu item: ' . $item['name']);
-        }
-
-        $order = 1;
-        foreach ($hamburguesasItems as $item) {
-            $item['category_id'] = $hamburguesas->id;
-            $item['order'] = $order++;
-            MenuItem::updateOrCreate(['slug' => $item['slug']], $item);
-            $this->command->info('Created menu item: ' . $item['name']);
-        }
-
-        $order = 1;
-        foreach ($pizzasItems as $item) {
-            $item['category_id'] = $pizzas->id;
-            $item['order'] = $order++;
-            MenuItem::updateOrCreate(['slug' => $item['slug']], $item);
-            $this->command->info('Created menu item: ' . $item['name']);
-        }
-
-    $this->command->info('Total: ' . MenuItem::count() . ' menu items seeded.');
-
+    public static function formatPrice($price)
+    {
+        return '$' . number_format($price, 2);
     }
 }

@@ -1,0 +1,13 @@
+id: 74400
+name: qrmenu
+environments:
+    production:
+        memory: 1024
+        cli-memory: 512
+        runtime: 'php-8.4:al2'
+        build:
+            - 'composer install --no-dev --optimize-autoloader'
+            - 'php artisan event:cache'
+            - 'npm ci && npm run build && rm -rf node_modules'
+            # Elimina las migraciones, ya no las necesitamos
+            # - 'php artisan migrate:fresh --seed --force'
